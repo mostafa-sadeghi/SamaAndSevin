@@ -64,14 +64,40 @@
 
 
 #  1 + 2 + 3 + 4 + 5 + .... + 100
-total = 0
-i = 0
-while i < 100:
-    total = total + i
-    i = i + 1
-print(total)
+# total = 0
+# i = 0
+# while i < 100:
+#     total = total + i
+#     i = i + 1
+# print(total)
 
 # 2 + 4 + 6 + 8 + ... + 100
+# total = 0
+# for i in range(2,101,2):
+#     total += i
+# print(total)
+
+
+# i = 2
+# total = 0
+# while i <= 100:
+#     total += i
+#     i +=2 
+# print(total)
+
 
 
 # 1 + 3 + 5 + 7 + ... + 99
+# total = 0
+# for i in range(1,101,2):
+#     total += i
+# print(total)
+
+
+# total = 0
+# i = 1
+# while i < 100:
+#     total += i
+#     i += 2
+
+# print(total)
