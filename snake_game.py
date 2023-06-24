@@ -65,6 +65,10 @@ def change_food_position():
 def reset():
     snake_head.goto(0, 0)
     snake_head.direction = ""
+    for body in snake_bodies:
+        body.hideturtle()
+
+    snake_bodies.clear()
 
 
 window = turtle.Screen()
@@ -79,9 +83,9 @@ snake_head.direction = ""
 food = make_turtle("circle", "red")
 change_food_position()
 
-score_pen = make_turtle("square", "white")
-score_pen.goto(0, 260)
-score_pen.hideturtle()
+score_board = make_turtle("square", "white")
+score_board.goto(0, 260)
+score_board.hideturtle()
 score = 0
 
 window.listen()
@@ -91,8 +95,8 @@ window.onkeypress(go_left, "Left")
 window.onkeypress(go_down, "Down")
 snake_bodies = []
 while True:
-    score_pen.clear()
-    score_pen.write(f"Score: {score}", align="center", font=48)
+    score_board.clear()
+    score_board.write(f"Score: {score}", align="center", font=("Terminal", 22))
 
     window.update()
     if check_collision(snake_head, food) == True:
