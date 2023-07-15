@@ -58,7 +58,7 @@ def check_collision(item1, item2):
 
 def change_food_position():
     random_x = random.randint(-270, 270)
-    random_y = random.randint(-270, 270)
+    random_y = random.randint(-270, 230)
     food.goto(random_x, random_y)
 
 
@@ -87,21 +87,36 @@ score_board = make_turtle("square", "white")
 score_board.goto(0, 260)
 score_board.hideturtle()
 score = 0
+high_score = 0
 
 window.listen()
 window.onkeypress(go_up, "Up")
 window.onkeypress(go_right, "Right")
 window.onkeypress(go_left, "Left")
 window.onkeypress(go_down, "Down")
+
+def onclose():
+    global running
+    running = False
+root = window._root
+root.protocol("WM_DELETE_WINDOW", onclose)
+
+
 snake_bodies = []
-while True:
+running = True
+while running:
     score_board.clear()
-    score_board.write(f"Score: {score}", align="center", font=("Terminal", 22))
+    score_board.write(
+        f"Score: {score}\tHighScore: {high_score}", align="center", font=("Terminal", 22))
 
     window.update()
     if check_collision(snake_head, food) == True:
         change_food_position()
         score += 1
+
+        if score > high_score:
+            high_score = score
+
         new_body = make_turtle("square", "grey")
         snake_bodies.append(new_body)
 
@@ -117,6 +132,13 @@ while True:
 
     if snake_head.xcor() > 290 or snake_head.xcor() < -290 or snake_head.ycor() > 290 or snake_head.ycor() < -290:
         reset()
+        score = 0
 
     move_snake()
+
+    for body in snake_bodies:
+        if check_collision(body, snake_head) == True:
+            reset()
+            score = 0
+
     time.sleep(0.15)
