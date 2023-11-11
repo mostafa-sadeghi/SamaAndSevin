@@ -68,7 +68,7 @@ main_screen.onkeypress(change_dir_to_right, "Right")
 root.protocol("WM_DELETE_WINDOW", close)
 
 score = 0
-
+# TODO  high score اضافه کردن 
 scoreboard = create_object("square", "purple")
 scoreboard.goto(0, 260)
 scoreboard.hideturtle()
@@ -90,8 +90,26 @@ while running:
         y = snake_tails[i-1].ycor()
         snake_tails[i].goto(x, y)
 
+    if len(snake_tails) > 0:
+        snake_tails[0].goto(snake_head.xcor(), snake_head.ycor())
+
+    if snake_head.xcor() > 290 or snake_head.xcor() < -290:
+        snake_head.setx(-1 * snake_head.xcor())
+    # TODO  اگر مار از بالای صفحه و یا پایین صفحه خارج شد، از سمت مخالف وارد شود.
     scoreboard.clear()
     scoreboard.write(f'Score:{score}', align="center", font=("Arial", 22))
 
     move()
+
+    for tail in snake_tails:
+        if tail.distance(snake_head) < 20:
+            score = 0
+            snake_head.home()
+            snake_head.direction = ""
+            for tail in snake_tails:
+                tail.ht()
+            snake_tails.clear()
+            break
+
+
     sleep(0.2)
