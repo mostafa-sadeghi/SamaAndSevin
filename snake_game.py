@@ -68,11 +68,11 @@ main_screen.onkeypress(change_dir_to_right, "Right")
 root.protocol("WM_DELETE_WINDOW", close)
 
 score = 0
-# TODO  high score اضافه کردن 
+high_score = 0
 scoreboard = create_object("square", "purple")
 scoreboard.goto(0, 260)
 scoreboard.hideturtle()
-scoreboard.write(f'Score:{score}', align="center", font=("Arial", 22))
+scoreboard.write(f'Score:{score}, highScore:{high_score}', align="center", font=("Arial", 22))
 
 snake_tails = []
 
@@ -95,14 +95,23 @@ while running:
 
     if snake_head.xcor() > 290 or snake_head.xcor() < -290:
         snake_head.setx(-1 * snake_head.xcor())
-    # TODO  اگر مار از بالای صفحه و یا پایین صفحه خارج شد، از سمت مخالف وارد شود.
+    if snake_head.ycor() >230:
+        snake_head.sety(-290)
+    if snake_head.ycor() < -290:
+        snake_head.sety(230)
+
     scoreboard.clear()
-    scoreboard.write(f'Score:{score}', align="center", font=("Arial", 22))
+    scoreboard.write(f'Score:{score}, highScore:{high_score}', align="center", font=("Arial", 22))
+
 
     move()
 
     for tail in snake_tails:
         if tail.distance(snake_head) < 20:
+            if score > high_score:
+                high_score = score
+                with open("score.txt","w") as file:
+                    file.write(str(high_score))
             score = 0
             snake_head.home()
             snake_head.direction = ""
