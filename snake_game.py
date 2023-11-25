@@ -1,6 +1,7 @@
 import turtle
 from snake_utils import *
 from time import sleep
+import os
 main_screen = turtle.Screen()
 main_screen.bgcolor("black")
 main_screen.setup(600, 600)
@@ -68,7 +69,11 @@ main_screen.onkeypress(change_dir_to_right, "Right")
 root.protocol("WM_DELETE_WINDOW", close)
 
 score = 0
-high_score = 0
+if os.path.exists("score.txt"):
+    with open("score.txt", "r") as file:
+        high_score = int(file.read())
+else:
+    high_score = 0
 scoreboard = create_object("square", "purple")
 scoreboard.goto(0, 260)
 scoreboard.hideturtle()
